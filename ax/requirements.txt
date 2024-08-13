@@ -1,6 +1,0 @@
-cssselect==1.2.0
-lxml==5.2.2
-ujson==5.10.0
-requests==2.32.3
-redis==5.0.6
-celery==5.4.0

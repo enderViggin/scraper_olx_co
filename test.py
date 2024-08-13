@@ -47,7 +47,7 @@ def scrape_all_saved_pages():
 
         print('\n\n##### END OF SCRAPING')
         if not result: continue                  
-        with open(f'./result/result_{file_name.split(".")[0]}.json', 'w') as file:
+        with open(f'./result_of_scraping/result_{file_name.split(".")[0]}.json', 'w') as file:
              file.write(result)
 
 

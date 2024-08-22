@@ -8,6 +8,6 @@ def main(input_data: str) -> str:
 
 
 if __name__ == '__main__':
-    input_data: str = ''
+    input_data: str = 'тут не должно быть пусто'
     result: str = main(input_data)
     print('RESULT: ', result)

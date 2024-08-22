@@ -5,15 +5,15 @@ from datetime import datetime
 import lxml.html
 from lxml.html import HtmlElement
 
-from ax.ax.page.text import Page
-from ax.ax.page.text import Result
+from ax.page.text import Page
+from ax.page.text import Result
 from utils.data_models import (
     Object,
     Profile,
     ListOfObjects,
     ObjectFromList
 )
-from scraper_exceptions import (
+from scraper.scraper_exceptions import (
     FieldValueIsMissing,
     PageTypeIsNotDefined,
     ErroneousInputData
@@ -806,6 +806,8 @@ class Scraper(ScraperUtils):
 
 
     def start(self, input_data: str) -> str:
+
+        self.check_input_data(input_data)
         page: Page = self.get_page(input_data)
         tree: HtmlElement = self.get_page_tree(input_data)
 

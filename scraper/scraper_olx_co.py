@@ -1,4 +1,4 @@
-from typing import Any, List, Dict, Tuple
+from typing import List, Dict, Tuple
 import re
 from datetime import datetime
 
@@ -7,7 +7,17 @@ from lxml.html import HtmlElement
 
 from ax.ax.page.text import Page
 from ax.ax.page.text import Result
-from utils.data_models import Object, Profile, ListOfObjects, ObjectFromList
+from utils.data_models import (
+    Object,
+    Profile,
+    ListOfObjects,
+    ObjectFromList
+)
+from scraper_exceptions import (
+    FieldValueIsMissing,
+    PageTypeIsNotDefined,
+    ErroneousInputData
+)
 
 
 
@@ -31,7 +41,7 @@ class ScraperUtils:
         if result:
             return result
         else:
-            raise ValueError('Не была получена ссылка на страницу объекта')
+            raise FieldValueIsMissing('Не была получена ссылка на страницу объекта')
 
 
     def generate_tabular_data(self, tabular_data: Result) -> Dict:
@@ -103,7 +113,7 @@ class ProfileSingleObjectScraperOlxCo(ScraperUtils):
         name: str = get_it_second_way()
         if name: return name
 
-        raise ValueError('Не было получено имя продавца')
+        raise FieldValueIsMissing('Не было получено имя продавца')
 
 
     def get_image_of_profile(self, page: Page) -> str:
@@ -151,7 +161,7 @@ class ProfileSingleObjectScraperOlxCo(ScraperUtils):
         image: str = get_it_third_way()
         if image: return image
 
-        raise ValueError('Не было получено изображение продавца')
+        raise FieldValueIsMissing('Не было получено изображение продавца')
 
 
     def get_link_to_seller(self, page: Page) -> str:
@@ -187,7 +197,7 @@ class ProfileSingleObjectScraperOlxCo(ScraperUtils):
         link: str = get_it_second_way()
         if link: return link
 
-        raise ValueError('Не была получена ссылка на продавца')
+        raise FieldValueIsMissing('Не была получена ссылка на продавца')
 
 
     def get_installment_loan_payment(self, page: Page) -> str:
@@ -208,7 +218,7 @@ class ProfileSingleObjectScraperOlxCo(ScraperUtils):
         element: Result = page.xpath('//div[text()="Cicilan"]')
 
         if list(element):
-            raise ValueError('Не была получена рассрочка кредитного расчета')
+            raise FieldValueIsMissing('Не была получена рассрочка кредитного расчета')
         else:
             return ''
 
@@ -231,7 +241,7 @@ class ProfileSingleObjectScraperOlxCo(ScraperUtils):
         element: Result = page.xpath('//div[text()="Down Payment"]')
 
         if list(element):
-            raise ValueError('Не был получен авансовый платеж кредитного расчета')
+            raise FieldValueIsMissing('Не был получен авансовый платеж кредитного расчета')
         else:
             return ''
 
@@ -264,7 +274,7 @@ class ProfileSingleObjectScraperOlxCo(ScraperUtils):
         element: Result = page.xpath('//h3/span[text()="Harga Sudah Termasuk"]')
 
         if list(element):
-            raise ValueError('Не был получен список элементов включенных в цену')
+            raise FieldValueIsMissing('Не был получен список элементов включенных в цену')
         else:
             return []
 
@@ -287,7 +297,7 @@ class ProfileSingleObjectScraperOlxCo(ScraperUtils):
         element: Result = page.xpath('//div[text()="Buka sekarang"]')
 
         if list(element):
-            raise ValueError('Не был получен график работы из профиля')
+            raise FieldValueIsMissing('Не был получен график работы из профиля')
         else:
             return ''
 
@@ -332,7 +342,7 @@ class SingleObjectScraperOlxCo(ScraperUtils):
         name: str = get_it_first_way()
         if name: return name
 
-        raise ValueError('Не было получено название объекта')
+        raise FieldValueIsMissing('Не было получено название объекта')
 
 
     def get_price_of_object(self, page: Page) -> str:
@@ -373,7 +383,7 @@ class SingleObjectScraperOlxCo(ScraperUtils):
         content: str = element.text().first().strip()
 
         if content:
-            raise ValueError('Не была получена цена объекта')
+            raise FieldValueIsMissing('Не была получена цена объекта')
         else:
             return ''
 
@@ -427,7 +437,7 @@ class SingleObjectScraperOlxCo(ScraperUtils):
         signature: str = get_it_second_way()
         if signature: return signature
 
-        raise ValueError('Не была получена подпись объекта')
+        raise FieldValueIsMissing('Не была получена подпись объекта')
 
 
     def get_address_of_object(self, page: Page) -> str:
@@ -466,7 +476,7 @@ class SingleObjectScraperOlxCo(ScraperUtils):
         address: str = get_it_third_way()
         if address: return address
 
-        raise ValueError('Не был получен адрес объекта')
+        raise FieldValueIsMissing('Не был получен адрес объекта')
 
 
     def get_list_of_images_of_object(self, page: Page) -> List[str]:
@@ -511,7 +521,7 @@ class SingleObjectScraperOlxCo(ScraperUtils):
         list_of_images: List[str] = get_it_second_way()
         if list_of_images: return list_of_images
 
-        raise ValueError('Не был получен список изображений объекта')
+        raise FieldValueIsMissing('Не был получен список изображений объекта')
 
 
     def get_list_of_details_of_object(self, page: Page) -> List[Tuple]:
@@ -535,7 +545,7 @@ class SingleObjectScraperOlxCo(ScraperUtils):
         element: Result = page.xpath('//h3[@data-aut-id="itemDescriptonTitle"]/span[text()="Detail"]')
         
         if list(element):
-            raise ValueError('Не был получен список деталей объекта')
+            raise FieldValueIsMissing('Не был получен список деталей объекта')
         else:
             return []
 
@@ -569,7 +579,7 @@ class SingleObjectScraperOlxCo(ScraperUtils):
         description: str = get_it_second_way()
         if description: return description
 
-        raise ValueError('Не было получено описание объекта')
+        raise FieldValueIsMissing('Не было получено описание объекта')
 
 
     def get_object_overview_data(self, page: Page) -> List:
@@ -595,7 +605,7 @@ class SingleObjectScraperOlxCo(ScraperUtils):
 
         element: Result = page.xpath('//h3[@data-aut-id="adOverview"]')
         if list(element):
-            raise ValueError('Не были получены данные обзора объекта')
+            raise FieldValueIsMissing('Не были получены данные обзора объекта')
         else:
             return []
 
@@ -657,7 +667,7 @@ class SingleObjectScraperOlxCo(ScraperUtils):
         ad_id: str = get_it_third_way()
         if ad_id: return ad_id
 
-        raise ValueError('Не был получен ID объявления')
+        raise FieldValueIsMissing('Не был получен ID объявления')
 
 
     def get_object_data(self, page: Page, tree: HtmlElement) -> Object:
@@ -724,7 +734,7 @@ class ObjectFromListScraperOlxCo():
         object_links: List[str] = get_it_first_way()
         if object_links: return object_links
 
-        raise ValueError('Не был получен список ссылок объектов')
+        raise FieldValueIsMissing('Не был получен список ссылок объектов')
 
 
     def get_names_of_object(self, page: Page) -> List[str]:
@@ -742,7 +752,7 @@ class ObjectFromListScraperOlxCo():
         names_of_object: List[str] = get_it_first_way()
         if names_of_object: return names_of_object
 
-        raise ValueError('Не был получен список ссылок объектов')
+        raise FieldValueIsMissing('Не был получен список ссылок объектов')
 
 
     def get_data(self, page: Page) -> ListOfObjects:
@@ -771,6 +781,16 @@ class ObjectFromListScraperOlxCo():
 
 class Scraper(ScraperUtils):
 
+    def check_input_data(self, input_data: str) -> None:
+        """ Проверяем входные данные """
+
+        if input_data == 'тут не должно быть пусто':
+            raise ErroneousInputData('В скрапер не были переданы входные данные')
+
+        if not input_data.strip():
+            raise ErroneousInputData('В скрапер были отправлены пустые входные данные')
+
+
     def find_out_what_to_scrap(self, page: Page) -> str:
         """ Определяем что именно будем скрапить """
 
@@ -782,7 +802,7 @@ class Scraper(ScraperUtils):
         elif list(list_of_objects_from_issue):
             return 'object_from_list'
         else:
-            raise ValueError('Не определен тип страницы для скрапинга')
+            raise PageTypeIsNotDefined('Не определен тип страницы для скрапинга')
 
 
     def start(self, input_data: str) -> str:
@@ -796,6 +816,6 @@ class Scraper(ScraperUtils):
         elif what_to_scrap == 'object_from_list':
             result: str = ObjectFromListScraperOlxCo().start(page)
         else:
-            raise ValueError('Не определен тип страницы для скрапинга')
+            raise PageTypeIsNotDefined('Не определен тип страницы для скрапинга')
 
         return result

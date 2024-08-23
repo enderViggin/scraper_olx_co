@@ -1,8 +1,11 @@
 import os
+import sys
+import re
 
 from selenium.webdriver import Chrome
 
-from scraper.scraper_olx_co import Scraper
+sys.path.append(os.path.abspath('.'))
+from scraper_olx_co.scraper.scraper_olx_co import Scraper
 
 
 
@@ -37,8 +40,9 @@ def get_input_data_via_selenium() -> None:
 def scrape_all_saved_pages():
     """ Функция для тестов. Скрапим все сохраненные страницы из папки scraping_pages """
 
-    for count, file_name in enumerate(os.listdir('./scraping_pages')):                                                       
-        path: str = f'./scraping_pages/{file_name}'
+    for count, file_name in enumerate(os.listdir('./src/tests/scraping_pages')):                                                       
+        path: str = f'./src/tests/scraping_pages/{file_name}'
+        if not re.findall(r'/page\d+?\.html$', path): continue
 
         print(f'\n\n##### №{count} {file_name}')                                  
         with open(path) as file:       
@@ -47,7 +51,7 @@ def scrape_all_saved_pages():
 
         print('\n\n##### END OF SCRAPING')
         if not result: continue                  
-        with open(f'./result_of_scraping/result_{file_name.split(".")[0]}.json', 'w') as file:
+        with open(f'./src/tests/result_{file_name.split(".")[0]}.json', 'w') as file:
              file.write(result)
 
 

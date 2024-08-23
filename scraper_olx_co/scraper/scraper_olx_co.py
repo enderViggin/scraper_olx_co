@@ -7,13 +7,13 @@ from lxml.html import HtmlElement
 
 from ax.page.text import Page
 from ax.page.text import Result
-from utils.data_models import (
+from scraper_olx_co.scraper.data_models import (
     Object,
     Profile,
     ListOfObjects,
     ObjectFromList
 )
-from scraper.scraper_exceptions import (
+from scraper_olx_co.scraper.scraper_exceptions import (
     FieldValueIsMissing,
     PageTypeIsNotDefined,
     ErroneousInputData

@@ -9,15 +9,6 @@ from scraper_olx_co.scraper.scraper_olx_co import Scraper
 
 
 
-def get_input_data_via_file() -> str:
-    """ Функция для тестов. Получаем входные данные для скрапинга через файл """
-
-    file_name: str = f'./scraping_pages/page1.html'
-    with open(file_name) as file:
-        content: str = file.read()
-        return content
-
-
 def get_input_data_via_selenium() -> None:
     """ Функция для тестов. Получаем входные данные для парсинга через selenium """
                                 
@@ -26,7 +17,7 @@ def get_input_data_via_selenium() -> None:
                                                       
     while True:                                                              
        count += 1
-       file_name: str = f'./scraping_pages/page{count}.html'
+       file_name: str = f'./scraper_olx_co/tests/scraping_pages/page{count}.html'
        response: str = input('Did the page load?')                                                          
        if response == 'q': break
        html: str = browser.page_source  
@@ -40,8 +31,8 @@ def get_input_data_via_selenium() -> None:
 def scrape_all_saved_pages():
     """ Функция для тестов. Скрапим все сохраненные страницы из папки scraping_pages """
 
-    for count, file_name in enumerate(os.listdir('./src/tests/scraping_pages')):                                                       
-        path: str = f'./src/tests/scraping_pages/{file_name}'
+    for count, file_name in enumerate(os.listdir('./scraper_olx_co/tests/scraping_pages')):
+        path: str = f'./scraper_olx_co/tests/scraping_pages/{file_name}'
         if not re.findall(r'/page\d+?\.html$', path): continue
 
         print(f'\n\n##### №{count} {file_name}')                                  
@@ -51,10 +42,10 @@ def scrape_all_saved_pages():
 
         print('\n\n##### END OF SCRAPING')
         if not result: continue                  
-        with open(f'./src/tests/result_{file_name.split(".")[0]}.json', 'w') as file:
+        with open(f'./scraper_olx_co/tests/result_of_scraping/result_{file_name.split(".")[0]}.json', 'w') as file:
              file.write(result)
 
 
 if __name__ == '__main__':
-    scrape_all_saved_pages()
     # get_input_data_via_selenium()
+    scrape_all_saved_pages()

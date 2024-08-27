@@ -13,7 +13,7 @@ from scraper_olx_co.scraper.data_models import (
     ListOfObjects,
     ObjectFromList
 )
-from scraper_olx_co.scraper.scraper_exceptions import (
+from scraper_olx_co.scraper.exceptions import (
     FieldValueIsMissing,
     PageTypeIsNotDefined,
     ErroneousInputData

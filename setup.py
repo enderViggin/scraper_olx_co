@@ -1,14 +1,8 @@
 from setuptools import setup, find_packages
 
 
-# Путь к библиотеке ax, которая хранится локально на компьютере
-PATH_TO_AX_LIBRARY: str = ''
-if not PATH_TO_AX_LIBRARY: raise ValueError('Укажите путь к библиотеке ax')
-
 # Добавляем все зависимости парсера
-with open('requirements.txt') as f:
-    required = f.read().splitlines()
-    required.append(f'ax @ file://localhost{PATH_TO_AX_LIBRARY}')
+with open('requirements.txt') as f: required = f.read().splitlines()
 
 setup(
     name='scraper_olx_co',

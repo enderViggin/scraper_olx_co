@@ -7,7 +7,7 @@
 `git clone https://git.faqhld.com/restate/ax.git`
 
 2 - Клонировать себе сам скрапер
-`git clone https://github.com/enderViggin/scraper_olx_co.git`
+`git clone https://git.faqhld.com/me01985/scraper_olx_co.git`
 
 3 - Установить зависимости скрапера
 
